@@ -331,3 +331,7 @@ if client and OPENAI_API_KEY:
                         st.error(f"予期せぬエラーが発生しました (資金配分): {e}")
     elif st.session_state.show_bet_suggestion_details and not st.session_state.suggested_bets_text : # 買い目提案ボタンが押されたが結果がない場合
         st.warning("AIによる買い目提案の取得に失敗しました。APIキーや設定を確認してください。")
+
+
+else: # APIキーやクライアントがない場合
+    st.info("OpenAI APIキーを入力すると、AIによる買い目提案機能が利用できます。")
