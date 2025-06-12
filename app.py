@@ -197,6 +197,8 @@ if 'suggested_bets_text' not in st.session_state:
 if 'show_bet_suggestion_details' not in st.session_state:
     st.session_state.show_bet_suggestion_details = False
 
+if 'prompt_context_for_odds' not in st.session_state:
+    st.session_state.prompt_context_for_odds = ""
 
 if client and OPENAI_API_KEY:
     if st.button(f"AI ({selected_model}) に買い目を提案してもらう", disabled=not has_marks, key="get_bets_button"):
@@ -209,6 +211,7 @@ if client and OPENAI_API_KEY:
                 for index, row in edited_df.iterrows():
                     if row["印"] != "無印":
                         bet_prompt_context += f"{row['印']} : {row['馬名']} (馬番:{row['馬番']}, オッズ:{row['オッズ']:.1f}倍, {row['人気']}番人気)\n"
+                        st.session_state.prompt_context_for_odds += f"馬番:{row['馬番']}, オッズ:{row['オッズ']:.1f}倍\n"
 
                 system_prompt_bets = f"""あなたはプロの馬券師AIです。
 """
@@ -281,6 +284,8 @@ if client and OPENAI_API_KEY:
         if st.button(f"AI ({selected_model}) に資金配分を提案してもらう", key="get_allocation_button"):
             if budget <= 0:
                 st.warning("予算は0より大きい値を入力してください。")
+            elif budget % 100 != 0:
+                st.warning("予算は100円単位で入力してください。")
             else:
                 with st.spinner(f"AI ({selected_model}) が資金配分を考えています... 🤔"):
                     system_prompt_allocation = f"""あなたはプロの馬券師AIです。
@@ -296,7 +301,7 @@ if client and OPENAI_API_KEY:
 {st.session_state.suggested_bets_text}
 
 【買い目の馬の情報（馬番、オッズ）】
-{prompt_context_for_odds} 
+{st.session_state.prompt_context_for_odds} 
 
 【出力フォーマット】
 #### 資金配分提案 (総予算: {budget}円)
@@ -326,12 +331,3 @@ if client and OPENAI_API_KEY:
                         st.error(f"予期せぬエラーが発生しました (資金配分): {e}")
     elif st.session_state.show_bet_suggestion_details and not st.session_state.suggested_bets_text : # 買い目提案ボタンが押されたが結果がない場合
         st.warning("AIによる買い目提案の取得に失敗しました。APIキーや設定を確認してください。")
-
-
-else: # APIキーやクライアントがない場合
-    if not OPENAI_API_KEY and api_key_input_visible:
-        st.info("OpenAI APIキーを入力すると、AIによる買い目提案機能が利用できます。")
-    elif not OPENAI_API_KEY and not api_key_input_visible:
-        st.info("OpenAI APIキーが設定されていないため、AIによる買い目提案機能は無効です。")
-    elif not client and OPENAI_API_KEY:
-        st.warning("OpenAIクライアントの準備ができていません。APIキーや設定を確認してください。")
