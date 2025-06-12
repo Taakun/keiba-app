@@ -1,6 +1,8 @@
 # **AI馬券プランナー**
 
-これは、あなたの競馬予想をサポートするためのStreamlit製Webアプリケーションです。出走馬に予想印を付けると、OpenAIのAIが馬券の買い目や資金配分を提案してくれます。
+これは、あなたの競馬予想をサポートするためのStreamlit製Webアプリケーションです。出走馬に予想印を付けると、OpenAIのAIが馬券の買い目や資金配分を提案してくれます。  
+webアプリは[こちら](https://keiba-ai-horse-planner.streamlit.app/)から!
+
 
 ## **主な機能**
 
@@ -14,8 +16,12 @@
 
 ## **画面イメージ**
 
-| 印の入力画面 | AIによる提案画面 |
-| :---- | :---- |
+### **印の入力画面**
+<img src="https://github.com/user-attachments/assets/8072fd89-c5b6-49b8-9361-b8d9027df235" width="50%" />
+
+### **AIによる提案画面**
+<img src="https://github.com/user-attachments/assets/cbc5d662-a248-4fa2-9788-5fb11dd731db" width="30%" /> |
+
 
 ## **使用方法**
 
@@ -47,6 +53,7 @@
 .  
 ├── .gitignore          \# Gitの追跡対象外ファイルを指定  
 ├── app.py              \# アプリケーションのメインスクリプト  
+├── requirements.py     \# 必要なpythonライブラリ  
 └── data/  
     ├── 2024\_天皇賞(秋).csv  \# レースデータのサンプル  
     └── 2025\_日本ダービー.csv \# レースデータのサンプル
