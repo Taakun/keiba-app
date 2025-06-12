@@ -8,7 +8,7 @@ import glob
 
 # --- アプリの基本設定 ---
 st.set_page_config(
-    page_title="AI競馬予想アプリ",
+    page_title="AI馬券プランナー",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -118,7 +118,7 @@ except KeyError as e:
     st.stop()
 
 
-st.title(f"AI競馬予想アプリ \n ## {race_name}")
+st.title(f"AI馬券プランナー \n ## {race_name}")
 
 印選択肢 = ["◎", "◯", "▲", "△", "無印"]
 df = pd.DataFrame(horses_data)
